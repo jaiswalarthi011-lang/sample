@@ -13,7 +13,7 @@ class TTSService:
         if not text or not self.api_key:
             return None
 
-        text = text[:2000]  # Increased limit for longer TTS content if needed
+        text = text[:3000]  # Further increased limit for complete TTS content
 
         payload = {
             "model_id": "sonic-2",

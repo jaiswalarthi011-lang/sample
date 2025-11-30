@@ -525,6 +525,9 @@ async function playInsight() {
         return;
     }
 
+    console.log('TTS Text to send:', currentInsightText);
+    console.log('Text length:', currentInsightText.length);
+
     transcript.textContent = 'Preparing audio...';
 
     try {
@@ -577,7 +580,8 @@ async function playInsight() {
             };
 
             // Start playing
-            currentAudio.play().catch(() => {
+            currentAudio.play().catch((error) => {
+                console.error('Audio playback error:', error);
                 showToast('Failed to start audio', 'error');
                 transcript.textContent = 'Playback failed';
             });
