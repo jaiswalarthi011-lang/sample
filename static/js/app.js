@@ -314,16 +314,19 @@ function renderKnowledgeGraph(data) {
             .attr('transform', `translate(${node.x}, ${node.y})`)
             .style('cursor', 'pointer')
             .on('click', () => showInsight(node));
-        
+
         nodeGroup.append('circle')
             .attr('r', 40)
             .attr('fill', `url(#gradient-${node.id})`)
             .attr('stroke', node.color)
             .attr('stroke-width', 3);
-        
+
+        // Position Competitors label lower
+        const labelY = node.name.toLowerCase() === 'competitors' ? 75 : 60;
+
         nodeGroup.append('text')
             .attr('class', 'node-label')
-            .attr('y', 60)
+            .attr('y', labelY)
             .attr('fill', '#000000')
             .text(node.name);
         

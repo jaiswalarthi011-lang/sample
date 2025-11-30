@@ -14,7 +14,7 @@
         <header class="top-bar">
             <div class="brand">
                 <img src="{{ url_for('static', filename='img/ltim.png') }}" alt="LTIMindtree Logo" class="brand-logo">
-                <span class="brand-text">Sales Intelligence</span>
+                <span class="brand-text">Sales Mind</span>
             </div>
             <div class="header-actions">
                 <button class="back-btn" id="backBtn" onclick="goBack()">
@@ -65,10 +65,10 @@
             <div class="graph-canvas full-width" id="graphCanvas">
                 <div class="search-container" id="searchContainer">
                     <div class="search-box">
-                        <h1 class="search-title">Company Research Intelligence</h1>
-                        <p class="search-subtitle">Enter a company name to discover insights</p>
+                        <h1 class="search-title">Client Research Intelligence</h1>
+                        <p class="search-subtitle">Enter a L&T / LTIMindtree client to discover insights</p>
                         <div class="search-input-group">
-                            <input type="text" id="companyInput" class="search-input" placeholder="e.g., Tesla, Apple, Google..." autocomplete="off">
+                            <input type="text" id="companyInput" class="search-input" placeholder="e.g., Nestlé, Unilever, Coca-Cola..." autocomplete="off">
                             <button class="search-btn" onclick="performSearch()">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <circle cx="11" cy="11" r="8"/>
@@ -175,6 +175,7 @@
                     <div class="tts-progress-large" id="ttsProgress">
                         <div class="tts-progress-bar" id="ttsProgressBar"></div>
                     </div>
+                    <div class="insights-from-venu">Insights from Venu</div>
                 </div>
                 <div class="tts-transcript-footer" id="ttsTranscript"></div>
             </div>
