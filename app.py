@@ -11,9 +11,16 @@ logging.basicConfig(level=logging.WARNING)  # Changed from DEBUG to WARNING to r
 # Vercel deployment detection
 is_vercel = os.environ.get('VERCEL', False)
 
-app = Flask(__name__,
-            static_folder='../static' if is_vercel else 'static',
-            template_folder='../templates' if is_vercel else 'templates')
+if is_vercel:
+    # In Vercel, we're running from the root directory
+    app = Flask(__name__,
+                static_folder='static',
+                template_folder='templates')
+else:
+    # Local development
+    app = Flask(__name__,
+                static_folder='static',
+                template_folder='templates')
 
 app.secret_key = os.environ.get("SESSION_SECRET", "default-secret-key-change-in-production")
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
