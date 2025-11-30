@@ -247,15 +247,17 @@ def compress_insight_with_grok(insight, company_name, category):
         if not api_keys.get('openrouter'):
             return f"{company_name} benefits from LTIMindtree solutions."
 
-        prompt = f"""As LTIMindtree CEO Venu, create ultra-short guidance (under 25 words) for your sales team on how to sell to {company_name}.
+        prompt = f"""As LTIMindtree CEO Venu, create 1-2 sentence guidance for sales team on selling to {company_name}.
 
-Based on this insight: {insight}
+Based on: {insight}
 
-Format as CEO speaking to sales team: "Team, [company_name] needs [problem]—pitch [LTIMindtree solution] to [benefit]."
+Make it sound like CEO speaking to sales reps. Focus on specific LTIMindtree offerings they should pitch.
 
-Make it sound like direct CEO guidance to sales reps. Keep under 25 words total.
+Format: "Team, [company_name] needs [problem]. Pitch our [specific LTIM offering] to [benefit]."
 
-Provide ONLY the guidance sentence."""
+Keep it 1-2 sentences, simple language, mention actual LTIMindtree products/services.
+
+Provide ONLY the CEO guidance text."""
 
         response = requests.post(
             'https://openrouter.ai/api/v1/chat/completions',
@@ -268,7 +270,7 @@ Provide ONLY the guidance sentence."""
             json={
                 'model': 'meta-llama/llama-3.2-3b-instruct:free',
                 'messages': [{'role': 'user', 'content': prompt}],
-                'max_tokens': 100,
+                'max_tokens': 300,
                 'temperature': 0.3
             },
             timeout=10
