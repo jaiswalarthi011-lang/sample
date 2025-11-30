@@ -105,10 +105,85 @@ def get_panel_insight(category):
     for insight in insights[:3]:
         insight_text += f"{insight['title']}: {insight['snippet']} "
 
-    # LTIM product catalog (same as before)
+    # Comprehensive LTIMindtree catalog (matching research.py)
     ltim_products = """
-LTIMindtree offers: Canvas.ai (GenAI platform), Fosfor (data intelligence), BlueVerse AI (intelligent agents),
-Insight NxT (IoT/operations), Platform Operations, Digital Platforms, and industry solutions for BFSI, manufacturing, retail/CPG, and hi-tech.
+INDUSTRY VERTICALS (DOMAINS):
+Banking & Financial Services, Insurance, Capital Markets & Payments, Retail, Consumer Packaged Goods (CPG), Travel, Transportation & Hospitality, Manufacturing (Industrial, Automotive, Aerospace, EPC, Process Manufacturing), Energy, Utilities, Oil & Gas, Hi-Tech & Services, Communications, Media & Entertainment, Telecom, Healthcare, Life Sciences & Pharma, Public Services & Government, Real Estate, Logistics
+
+CORE SERVICES (HORIZONTAL):
+Cloud & Infrastructure Services: Cloud Migration & Modernization, Hybrid Cloud Management, Multi-Cloud Governance, DevOps & CI/CD Automation, Containerization (Kubernetes, Docker), Platform Operations, AIOps, Intelligent IT Operations, Near Zero Touch Operations
+Consulting Services: Digital Strategy Consulting, Business Transformation, AI & Automation Consulting, Process Consulting, Data Strategy Consulting
+Data & Analytics: Data Engineering, Data Warehousing, Data Lakes, Data Mesh, Business Intelligence (BI), Big Data Platforms, Advanced Analytics, Predictive Modeling, Machine Learning, AI/ML Engineering, Decision Intelligence, Augmented Analytics
+Digital Engineering: Application Development, Mobile App Development, Web Application Development, Cloud-Native Development, Microservices Architecture, API Development & Management, Product Engineering, Platform Engineering, Device Engineering, Embedded Systems
+Enterprise Application Services: SAP (S/4HANA, RISE with SAP, SAP BTP, SAP SuccessFactors, SAP Fiori), Oracle (Oracle Cloud, OCI, Oracle ERP, Oracle HCM), Microsoft Dynamics 365 (Finance & Operations, CRM, Business Central), Salesforce (Sales Cloud, Service Cloud, Marketing Cloud, Commerce Cloud), ServiceNow (ITSM, HRSD, SPM, CSM), Workday, Temenos
+ERP Transformation: ERP Implementation, ERP Migration, ERP Upgrade, ERP Managed Services, ERP Optimization
+
+Legacy Modernization: Application Modernization, Mainframe Modernization, Re-hosting, Re-platforming, Re-architecting, Database Migration, Data Warehouse Migration, Cloud Re-engineering
+
+Customer Success & Experience: CRM Transformation, Customer 360, Omnichannel Experience, Digital Commerce, Personalization, Customer Analytics, Marketing Automation
+
+Cyber Security: Cloud Security, Identity & Access Management (IAM), Security Operations Center (SOC), Threat Detection & Response, Data Privacy, Compliance & GRC, Zero Trust Security
+
+Quality Engineering & Testing: Test Automation, Performance Engineering, Continuous Testing, AI-Driven Testing, Product Quality Engineering, Digital Testing, Data Testing, Enterprise Apps Testing, Cloud Assurance
+
+Intelligent Automation: Robotic Process Automation (RPA), Hyper-Automation, Process Mining, Workflow Automation, Document Processing, Chatbots & Conversational AI, Low-Code/No-Code Development
+
+Product Engineering Services: IoT Platform Development, Connected Products, Embedded Software, Firmware Development, Hardware-Software Integration
+
+INDUSTRY-SPECIFIC SERVICES:
+BFSI: Core Banking Transformation, Payments Modernization, Wealth Management, Trade Finance, Loan Management, Anti-Money Laundering (AML), Fraud Detection, RegTech, InsurTech, Policy Administration, Claims Management, Underwriting Automation
+
+Insurance Platforms: Guidewire (PolicyCenter, BillingCenter, ClaimCenter), Duck Creek (Policy, Billing, Claims, Distribution), Majesco, Insurity
+
+Healthcare & Life Sciences: Clinical Trials, Drug Supply Chain, Pharma Manufacturing, Healthcare Analytics, Patient Engagement, Care Management, Population Health, Interoperability (HL7, FHIR), Provider Solutions, Payer Solutions
+
+Manufacturing & Industry 4.0: Smart Factory, Predictive Maintenance, Asset Performance Management, Connected Worker, Digital Twin, MES Integration, Supply Chain Visibility, Quality Management, Shop Floor Automation
+
+Retail & CPG: Demand Sensing, Trade Promotion Optimization, Merchandise Planning, Connected Store, E-Commerce, Omnichannel Retail, Supply Chain Analytics, Revenue Growth Management
+
+Energy & Utilities: Grid Intelligence, Smart Metering (AMI), Customer Care & Billing, Network Management, Asset Management, Demand Response, Renewable Energy Management, Carbon Management
+
+Telecom & Media: BSS/OSS Transformation, 5G Solutions, Network Operations, Content Management, OTT Platforms, Ad-Tech, Subscriber Analytics
+
+Travel & Transportation: Airline Systems, Hotel Property Management, Booking Platforms, Loyalty Programs, Fleet Management, Cargo Tracking, Logistics Optimization
+
+PROPRIETARY PLATFORMS & PRODUCTS:
+AI & Data Platforms:
+- Canvas.ai: Enterprise GenAI platform for building, managing and consuming generative AI solutions with responsible AI principles
+- BlueVerse AI: AI-native ecosystem with intelligent agents, agentic AI, modular architecture for autonomous IT operations and enterprise processes
+- DecisionsCX Platform: Customer 360 and hyper-personalization platform using first-party data and AI
+
+Cloud & Infrastructure Platforms:
+- Infinity Platform 2.0: Unified cloud transformation platform with industry blueprints, GenAI-driven cloud strategy, migration factory, multi-cloud governance, FinOps, sustainability tracking
+- Infinity Insights: Cloud assessment toolkit with pre-defined rules for fast-tracking cloud adoption
+- Enclose: Cloud migration and modernization accelerator
+- Cloud Boost: OCI migration and optimization framework powered by Infinity
+- Novigo: Oracle Cloud adoption accelerator
+
+IoT & Industry 4.0 Platforms:
+- iNXT (Insight NxT): Enterprise IoT platform connecting workers, machines, locations and processes; includes Asset NxT (asset intelligence), Worker NxT (connected worker), Material NxT (track-and-trace), Geospatial NxT (location intelligence), BI NxT (self-configurable analytics)
+
+Analytics & AI Platforms:
+- Mosaic Platform Suite: Integrated platform for analytics, AI, IoT and automation; includes Mosaic Decisions (analytics), Mosaic AI (ML models), Mosaic Automation (RPA/IT Ops), Leni (NLP-based virtual analytics assistant)
+
+Enterprise & Domain Platforms:
+- Reimagination Studio: SAP S/4HANA transformation accelerator with industry-specific blueprints
+- Canvas Profiler: Digital transformation impact assessment tool
+- SPEED Framework: Service Process Enablement Engineering and Deployment for ServiceNow implementations
+
+Automation & Operations Platforms:
+- iDigitalization (iDz): Low-code business process automation solution powered by IBM Cloud Pak
+- iBOC (Integrated Bot Operations Center): Shared bot support services for RPA at scale
+- AIM Modernization Center: Microsoft Dynamics legacy-to-cloud migration framework
+- NZTM (Near Zero Touch Migration): Platform re-platforming tool (e.g., Salesforce to ServiceNow)
+- Agentic Central: Enterprise AI solution for ServiceNow with intelligent agents
+
+Industry-Specific Accelerators:
+- Smart Underwriting Platform: GenAI-powered underwriting for insurance
+- Duck Creek Migration Framework: SaaS migration accelerators for P&C insurers
+- Guidewire Productivity Accelerators: Implementation and QA accelerators for Guidewire suite
+- SAP BTP Innovation Studio: Ready-to-deploy digital apps, microservices for SAP BTP
+- Oracle Industry Solutions: Pre-built solutions for banking, oil & gas, utilities, retail, life sciences, E&C, media
 """
 
     url = "https://openrouter.ai/api/v1/chat/completions"
