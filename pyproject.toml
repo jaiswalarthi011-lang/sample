@@ -1,0 +1,16 @@
+[project]
+name = "repl-nix-workspace"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "dnspython>=2.8.0",
+    "email-validator>=2.3.0",
+    "flask>=3.1.2",
+    "flask-sqlalchemy>=3.1.1",
+    "gunicorn>=23.0.0",
+    "httpx>=0.28.1",
+    "psycopg2-binary>=2.9.11",
+    "pymongo[srv]>=4.15.4",
+    "requests>=2.32.5",
+]

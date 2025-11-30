@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Intelligence Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <header class="top-bar">
+            <div class="brand">
+                <img src="{{ url_for('static', filename='img/ltim.png') }}" alt="LTIMindtree Logo" class="brand-logo">
+                <span class="brand-text">Sales Intelligence</span>
+            </div>
+            <div class="header-actions">
+                <button class="back-btn" id="backBtn" onclick="goBack()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Search
+                </button>
+                <div class="status-badges">
+                    <span class="status-badge" id="mongoStatus">
+                        <span class="status-dot"></span>
+                        <span>MongoDB</span>
+                    </span>
+                    <span class="status-badge" id="ttsStatus">
+                        <span class="status-dot"></span>
+                        <span>TTS</span>
+                    </span>
+                </div>
+                <button class="btn-settings" onclick="openApiModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                    </svg>
+                    API Keys
+                </button>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <aside class="sidebar-left hidden" id="sidebarLeft">
+                <div class="sidebar-header">
+                    <h3>Search History</h3>
+                </div>
+                <div class="history-list" id="historyList">
+                    {% for item in search_history %}
+                    <div class="history-item" onclick="searchCompany('{{ item.company_name }}')">
+                        <span class="company-name">{{ item.company_name }}</span>
+                        <button class="delete-btn" onclick="event.stopPropagation(); deleteHistory('{{ item.company_name }}')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 6L6 18M6 6l12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </aside>
+
+            <div class="graph-canvas full-width" id="graphCanvas">
+                <div class="search-container" id="searchContainer">
+                    <div class="search-box">
+                        <h1 class="search-title">Company Research Intelligence</h1>
+                        <p class="search-subtitle">Enter a company name to discover insights</p>
+                        <div class="search-input-group">
+                            <input type="text" id="companyInput" class="search-input" placeholder="e.g., Tesla, Apple, Google..." autocomplete="off">
+                            <button class="search-btn" onclick="performSearch()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"/>
+                                    <path d="m21 21-4.3-4.3"/>
+                                </svg>
+                                Research
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="loading-overlay" id="loadingOverlay">
+                    <div class="loading-content">
+                        <h1 class="loading-title">Researching Company Insights</h1>
+
+                        <div class="loading-steps">
+                            <div class="loading-step" id="step1">
+                                <div class="step-icon">1</div>
+                                <div class="step-content">
+                                    <div class="step-title">Analyzing Company Data</div>
+                                    <div class="step-description">Gathering and processing company information from multiple sources</div>
+                                    <div class="step-progress">
+                                        <div class="step-progress-bar" id="progress1"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="loading-step" id="step2">
+                                <div class="step-icon">2</div>
+                                <div class="step-content">
+                                    <div class="step-title">Research Intelligence</div>
+                                    <div class="step-description">Applying AI analysis to extract key business insights</div>
+                                    <div class="step-progress">
+                                        <div class="step-progress-bar" id="progress2"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="loading-step" id="step3">
+                                <div class="step-icon">3</div>
+                                <div class="step-content">
+                                    <div class="step-title">LTIMindtree Strategy</div>
+                                    <div class="step-description">Developing targeted recommendations using our service portfolio</div>
+                                    <div class="step-progress">
+                                        <div class="step-progress-bar" id="progress3"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="loading-step" id="step4">
+                                <div class="step-icon">4</div>
+                                <div class="step-content">
+                                    <div class="step-title">Knowledge Graph</div>
+                                    <div class="step-description">Building interactive visualization of company relationships</div>
+                                    <div class="step-progress">
+                                        <div class="step-progress-bar" id="progress4"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="loading-step" id="step5">
+                                <div class="step-icon">🎯</div>
+                                <div class="step-content">
+                                    <div class="step-title">Finalizing Results</div>
+                                    <div class="step-description">Preparing comprehensive sales intelligence report</div>
+                                    <div class="loading-spinner"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p>Transforming data into actionable sales intelligence...</p>
+                    </div>
+                </div>
+                <svg id="knowledgeGraph"></svg>
+            </div>
+
+            <aside class="sidebar-right" id="sidebarRight">
+                <div class="insight-panel" id="insightPanel">
+                    <button class="close-panel" onclick="closeInsightPanel()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 6L6 18M6 6l12 12"/>
+                        </svg>
+                    </button>
+                    <div class="insight-header">
+                        <h2 id="insightCategory">Category</h2>
+                        <span class="insight-badge" id="insightBadge">Insight</span>
+                    </div>
+                    <div class="insight-content" id="insightContent">
+                        <p>Select a node to view insights</p>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- CEO Footer -->
+        <footer class="ceo-footer" id="ceo-footer">
+            <div class="ceo-footer-content">
+                <div class="ceo-avatar-large" id="ceoAvatar">
+                    <div class="ceo-glow"></div>
+                    <div class="ceo-circle"></div>
+                    <img src="{{ url_for('static', filename='img/venu.png') }}" alt="Venu CEO" class="ceo-image">
+                    <div class="ceo-particles" id="ceoParticles"></div>
+                </div>
+                <div class="tts-controls-footer">
+                    <div class="tts-progress-large" id="ttsProgress">
+                        <div class="tts-progress-bar" id="ttsProgressBar"></div>
+                    </div>
+                </div>
+                <div class="tts-transcript-footer" id="ttsTranscript"></div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal-overlay" id="apiModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>API Key Management</h2>
+                <button class="modal-close" onclick="closeApiModal()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 6L6 18M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="api-key-field">
+                    <label>Serper API Key</label>
+                    <div class="key-input-group">
+                        <input type="password" id="serperKey" placeholder="Enter Serper API key">
+                        <button class="toggle-visibility" onclick="toggleKeyVisibility('serperKey')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="api-key-field">
+                    <label>OpenRouter API Key</label>
+                    <div class="key-input-group">
+                        <input type="password" id="openrouterKey" placeholder="Enter OpenRouter API key">
+                        <button class="toggle-visibility" onclick="toggleKeyVisibility('openrouterKey')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="api-key-field">
+                    <label>Cartesia API Key</label>
+                    <div class="key-input-group">
+                        <input type="password" id="cartesiaKey" placeholder="Enter Cartesia API key">
+                        <button class="toggle-visibility" onclick="toggleKeyVisibility('cartesiaKey')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="api-key-field">
+                    <label>Deepgram API Key</label>
+                    <div class="key-input-group">
+                        <input type="password" id="deepgramKey" placeholder="Enter Deepgram API key">
+                        <button class="toggle-visibility" onclick="toggleKeyVisibility('deepgramKey')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="api-key-field">
+                    <label>Firecrawl API Key</label>
+                    <div class="key-input-group">
+                        <input type="password" id="firecrawlKey" placeholder="Enter Firecrawl API key">
+                        <button class="toggle-visibility" onclick="toggleKeyVisibility('firecrawlKey')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="api-key-field">
+                    <label>Sonar API Key</label>
+                    <div class="key-input-group">
+                        <input type="password" id="sonarKey" placeholder="Enter Sonar API key">
+                        <button class="toggle-visibility" onclick="toggleKeyVisibility('sonarKey')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeApiModal()">Cancel</button>
+                <button class="btn-primary" onclick="saveApiKeys()">Save Keys</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
