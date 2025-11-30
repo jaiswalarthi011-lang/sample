@@ -161,11 +161,56 @@ def get_ultra_short_tts():
     if not insight:
         return jsonify({"tts_text": f"{company_name} benefits from LTIMindtree solutions."})
 
-    api_keys = get_api_keys()
-    research_service = ResearchService(api_keys)
+    # Compress the insight using Grok AI to 1/5th length
+    compressed_text = compress_insight_with_grok(insight, company_name, category)
+    return jsonify({"tts_text": compressed_text})
 
-    tts_text = research_service.condense_for_tts(insight, company_name, category)
-    return jsonify({"tts_text": tts_text})
+def compress_insight_with_grok(insight, company_name, category):
+    """Compress the insight text to 1/5th length using Grok AI"""
+    try:
+        api_keys = get_api_keys()
+        if not api_keys.get('openrouter'):
+            return f"{company_name} benefits from LTIMindtree solutions."
+
+        prompt = f"""Compress this business insight into a single, concise sentence that captures the key recommendation. Reduce it to about 1/5th the original length while maintaining the core value proposition for LTIMindtree.
+
+Original insight: {insight}
+
+Company: {company_name}
+Category: {category}
+
+Provide only the compressed sentence, no additional text or explanation."""
+
+        response = requests.post(
+            'https://openrouter.ai/api/v1/chat/completions',
+            headers={
+                'Authorization': f"Bearer {api_keys['openrouter']}",
+                'Content-Type': 'application/json',
+                'HTTP-Referer': 'https://sales-mind.vercel.app',
+                'X-Title': 'Sales Mind Platform'
+            },
+            json={
+                'model': 'meta-llama/llama-3.2-3b-instruct:free',
+                'messages': [{'role': 'user', 'content': prompt}],
+                'max_tokens': 100,
+                'temperature': 0.3
+            },
+            timeout=10
+        )
+
+        if response.status_code == 200:
+            result = response.json()
+            compressed = result['choices'][0]['message']['content'].strip()
+            # Clean up the response (remove quotes if present)
+            compressed = compressed.strip('"').strip("'")
+            return compressed if compressed else f"{company_name} benefits from LTIMindtree solutions."
+        else:
+            logging.error(f"Grok compression failed: {response.status_code} - {response.text}")
+            return f"{company_name} benefits from LTIMindtree solutions."
+
+    except Exception as e:
+        logging.error(f"Grok compression error: {e}")
+        return f"{company_name} benefits from LTIMindtree solutions."
 
 @app.route('/api/tts', methods=['POST'])
 def text_to_speech():
