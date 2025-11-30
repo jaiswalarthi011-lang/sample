@@ -172,14 +172,13 @@ def compress_insight_with_grok(insight, company_name, category):
         if not api_keys.get('openrouter'):
             return f"{company_name} benefits from LTIMindtree solutions."
 
-        prompt = f"""Compress this business insight into a single, concise sentence that captures the key recommendation. Reduce it to about 1/5th the original length while maintaining the core value proposition for LTIMindtree.
+        prompt = f"""Create a single, concise sentence (under 30 words) that summarizes the key LTIMindtree strategy for {company_name} based on this insight.
+
+Focus on: What LTIMindtree should do to help {company_name} succeed.
 
 Original insight: {insight}
 
-Company: {company_name}
-Category: {category}
-
-Provide only the compressed sentence, no additional text or explanation."""
+Provide ONLY the strategy sentence, no explanation or additional text."""
 
         response = requests.post(
             'https://openrouter.ai/api/v1/chat/completions',
