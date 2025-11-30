@@ -495,22 +495,8 @@ function switchTab(tabName) {
 }
 
 async function getUltraShortTTS(fullInsight, companyName, category) {
-    try {
-        const response = await fetch('/api/ultra-short-tts', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                insight: fullInsight,
-                company_name: companyName,
-                category: category
-            })
-        });
-        const data = await response.json();
-        return data.tts_text || `${companyName} benefits from LTIMindtree solutions.`;
-    } catch (e) {
-        console.error('Ultra-short TTS error:', e);
-        return `${companyName} benefits from LTIMindtree solutions.`;
-    }
+    // Return the full insight text instead of truncated version
+    return fullInsight;
 }
 
 async function playInsight() {
