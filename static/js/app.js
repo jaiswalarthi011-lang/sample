@@ -399,22 +399,110 @@ async function showInsight(node) {
                             </div>
                         </div>
                         <div id="research-tab" class="tab-panel">
-                            <div class="research-data-section">
+                            <div class="research-analytics-section">
+                                <div class="analytics-header">
+                                    <h4>📊 Research Analytics for ${currentCompanyName} - ${node.name}</h4>
+                                    <div class="analytics-stats">
+                                        <div class="stat-item">
+                                            <span class="stat-number">${node.data.insights.length}</span>
+                                            <span class="stat-label">Research Items</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-number">${node.data.insights.filter(i => i.link).length}</span>
+                                            <span class="stat-label">Source Links</span>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span class="stat-number">${node.data.insights.reduce((sum, i) => sum + i.snippet.length, 0)}</span>
+                                            <span class="stat-label">Total Characters</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="research-data-grid">
             `;
 
-            // Show original research data in second tab
+            // Show comprehensive research data
             if (node.data.insights && node.data.insights.length > 0) {
-                node.data.insights.forEach(insight => {
+                node.data.insights.forEach((insight, index) => {
+                    const sourceDomain = insight.link ? new URL(insight.link).hostname.replace('www.', '') : 'Unknown';
+                    const snippetWords = insight.snippet.split(' ').length;
+                    const titleWords = insight.title.split(' ').length;
+
                     html += `
-                        <div class="insight-item">
-                            <h5>${insight.title}</h5>
-                            <p>${insight.snippet}</p>
+                        <div class="comprehensive-insight-card">
+                            <div class="insight-header">
+                                <div class="insight-number">#${index + 1}</div>
+                                <div class="insight-source">
+                                    <span class="source-badge">${sourceDomain}</span>
+                                </div>
+                            </div>
+
+                            <div class="insight-content">
+                                <h5 class="insight-title">${insight.title}</h5>
+                                <div class="insight-meta">
+                                    <span class="meta-item">📝 ${titleWords} words in title</span>
+                                    <span class="meta-item">📄 ${snippetWords} words in content</span>
+                                    <span class="meta-item">🔗 ${insight.link ? 'Source available' : 'No source link'}</span>
+                                </div>
+                                <p class="insight-snippet">${insight.snippet}</p>
+                            </div>
+
+                            <div class="insight-actions">
+                                ${insight.link ? `<a href="${insight.link}" target="_blank" class="source-link">🔗 View Original Source</a>` : ''}
+                                <button class="copy-btn" onclick="copyToClipboard('${insight.title}: ${insight.snippet}')">📋 Copy</button>
+                            </div>
                         </div>
                     `;
                 });
+            } else {
+                html += `
+                    <div class="no-data-message">
+                        <p>🚫 No research data available for this category.</p>
+                        <p>This might indicate limited online presence or search restrictions.</p>
+                    </div>
+                `;
             }
 
+            // Add research summary
+            const totalInsights = node.data.insights.length;
+            const avgSnippetLength = totalInsights > 0 ?
+                Math.round(node.data.insights.reduce((sum, i) => sum + i.snippet.length, 0) / totalInsights) : 0;
+            const sourcesCount = new Set(node.data.insights.map(i => i.link ? new URL(i.link).hostname : null)).size;
+
             html += `
+                                </div>
+
+                                <div class="research-summary">
+                                    <h4>📈 Research Summary</h4>
+                                    <div class="summary-grid">
+                                        <div class="summary-item">
+                                            <span class="summary-value">${totalInsights}</span>
+                                            <span class="summary-label">Total Insights Collected</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-value">${avgSnippetLength}</span>
+                                            <span class="summary-label">Avg Characters per Insight</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-value">${sourcesCount}</span>
+                                            <span class="summary-label">Unique Source Domains</span>
+                                        </div>
+                                        <div class="summary-item">
+                                            <span class="summary-value">${node.data.insights.filter(i => i.link).length}</span>
+                                            <span class="summary-label">Insights with Direct Links</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="research-insights">
+                                        <h5>🔍 Key Findings:</h5>
+                                        <ul>
+                                            <li><strong>Data Quality:</strong> ${avgSnippetLength > 150 ? 'High' : avgSnippetLength > 100 ? 'Medium' : 'Low'} quality snippets collected</li>
+                                            <li><strong>Source Diversity:</strong> Information gathered from ${sourcesCount} different domains</li>
+                                            <li><strong>Content Depth:</strong> ${totalInsights >= 3 ? 'Comprehensive' : totalInsights >= 1 ? 'Basic' : 'Limited'} coverage of ${node.name} category</li>
+                                            <li><strong>Actionability:</strong> ${node.data.insights.filter(i => i.link).length === totalInsights ? 'All insights have source links' : 'Some insights lack direct source links'}</li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -886,4 +974,13 @@ function createBackgroundParticles() {
             }
         }, 6000);
     }
+}
+
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('Copied to clipboard!', 'success');
+    }).catch(err => {
+        console.error('Failed to copy: ', err);
+        showToast('Failed to copy to clipboard', 'error');
+    });
 }

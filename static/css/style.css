@@ -1528,3 +1528,327 @@ body::before {
     font-weight: 600;
     color: var(--primary-violet);
 }
+
+/* Research Analytics Section */
+.research-analytics-section {
+    padding: 20px 0;
+}
+
+.analytics-header {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.analytics-header h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary-violet);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.analytics-stats {
+    display: flex;
+    justify-content: space-around;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 16px;
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+    border-radius: 12px;
+    border: 1px solid rgba(124, 58, 237, 0.2);
+}
+
+.stat-number {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary-violet);
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--text-gray);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Comprehensive Insight Cards */
+.research-data-grid {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.comprehensive-insight-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 1px solid rgba(124, 58, 237, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.comprehensive-insight-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.15);
+    border-color: rgba(124, 58, 237, 0.3);
+}
+
+.insight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.insight-number {
+    background: var(--primary-violet);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.insight-source {
+    display: flex;
+    align-items: center;
+}
+
+.source-badge {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.insight-content h5 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-black);
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.insight-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.meta-item {
+    font-size: 11px;
+    color: var(--text-gray);
+    background: rgba(107, 114, 128, 0.1);
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.insight-snippet {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-black);
+    margin-bottom: 16px;
+}
+
+.insight-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--primary-violet);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.source-link:hover {
+    background: var(--primary-violet-dark);
+    transform: translateY(-1px);
+}
+
+.copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(16, 185, 129, 0.1);
+    color: #10B981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.copy-btn:hover {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Research Summary */
+.research-summary {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%);
+    border: 1px solid rgba(124, 58, 237, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 24px;
+}
+
+.research-summary h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary-violet);
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.summary-item {
+    text-align: center;
+    padding: 16px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid rgba(124, 58, 237, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.summary-value {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-violet);
+    margin-bottom: 4px;
+}
+
+.summary-label {
+    font-size: 11px;
+    color: var(--text-gray);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.research-insights h5 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-black);
+    margin-bottom: 12px;
+}
+
+.research-insights ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.research-insights li {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-gray);
+    margin-bottom: 8px;
+    padding-left: 16px;
+    position: relative;
+}
+
+.research-insights li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #10B981;
+    font-weight: 600;
+}
+
+.research-insights li strong {
+    color: var(--text-black);
+    font-weight: 600;
+}
+
+/* No Data Message */
+.no-data-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.05) 0%, rgba(220, 38, 38, 0.05) 100%);
+    border: 1px solid rgba(239, 68, 68, 0.1);
+    border-radius: 12px;
+    margin: 20px 0;
+}
+
+.no-data-message p {
+    font-size: 14px;
+    color: var(--text-gray);
+    margin-bottom: 8px;
+}
+
+.no-data-message p:first-child {
+    font-size: 16px;
+    font-weight: 600;
+    color: #EF4444;
+    margin-bottom: 12px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .analytics-stats {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .stat-item {
+        padding: 12px;
+    }
+
+    .stat-number {
+        font-size: 24px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .insight-meta {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .insight-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
